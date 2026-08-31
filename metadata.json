@@ -1,0 +1,6 @@
+{
+  "name": "FF Esports Tournament Organizer Admin & Control Station",
+  "description": "Dedicated esports tournament management console with real-time Firestore sync, team/squad rosters, 15-minute room credential engine, live standings calculator, UPI verification, and announcements.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

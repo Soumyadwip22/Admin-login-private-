@@ -1,0 +1,192 @@
+{
+  "entities": {
+    "Tournament": {
+      "title": "Tournament",
+      "description": "Esports tournament configuration and metadata",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string", "maxLength": 200 },
+        "game": { "type": "string", "maxLength": 50 },
+        "format": { "type": "string", "enum": ["Squad", "Duo", "Solo"] },
+        "prizePool": { "type": "number" },
+        "currency": { "type": "string", "maxLength": 10 },
+        "entryFee": { "type": "number" },
+        "totalSlots": { "type": "number" },
+        "registeredCount": { "type": "number" },
+        "registrationDeadline": { "type": "string" },
+        "startDate": { "type": "string" },
+        "endDate": { "type": "string" },
+        "bannerUrl": { "type": "string" },
+        "rules": { "type": "string" },
+        "status": { "type": "string", "enum": ["upcoming", "registration_open", "registration_closed", "ongoing", "completed"] },
+        "groups": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["title", "prizePool", "entryFee", "status"]
+    },
+    "Team": {
+      "title": "Team",
+      "description": "Registered Esports Squad/Team",
+      "type": "object",
+      "properties": {
+        "tournamentId": { "type": "string", "maxLength": 128 },
+        "teamName": { "type": "string", "maxLength": 100 },
+        "tag": { "type": "string", "maxLength": 10 },
+        "captainName": { "type": "string", "maxLength": 100 },
+        "captainPhone": { "type": "string", "maxLength": 20 },
+        "captainEmail": { "type": "string", "maxLength": 150 },
+        "captainDiscord": { "type": "string", "maxLength": 100 },
+        "logoUrl": { "type": "string" },
+        "players": { "type": "string" },
+        "status": { "type": "string", "enum": ["pending", "qualified", "rejected", "waitlisted", "disqualified"] },
+        "group": { "type": "string", "enum": ["A", "B", "C", "Finals", "Unassigned"] },
+        "slotNumber": { "type": "number" },
+        "paymentId": { "type": "string", "maxLength": 128 },
+        "paymentStatus": { "type": "string", "enum": ["pending", "verified", "rejected", "exempt"] },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["tournamentId", "teamName", "captainName", "captainPhone", "status"]
+    },
+    "Match": {
+      "title": "Match",
+      "description": "Esports match fixture and room credentials",
+      "type": "object",
+      "properties": {
+        "tournamentId": { "type": "string", "maxLength": 128 },
+        "matchNumber": { "type": "number" },
+        "title": { "type": "string", "maxLength": 150 },
+        "map": { "type": "string", "enum": ["Bermuda", "Purgatory", "Kalahari", "Alpine", "NexTerra"] },
+        "date": { "type": "string" },
+        "time": { "type": "string" },
+        "group": { "type": "string", "enum": ["A", "B", "C", "Finals", "All"] },
+        "status": { "type": "string", "enum": ["scheduled", "in_progress", "completed", "cancelled"] },
+        "roomId": { "type": "string", "maxLength": 100 },
+        "roomPassword": { "type": "string", "maxLength": 100 },
+        "credentialsReleaseTime": { "type": "string" },
+        "isCredentialsPublished": { "type": "boolean" },
+        "autoPublish15Min": { "type": "boolean" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["tournamentId", "map", "status"]
+    },
+    "Standing": {
+      "title": "Standing",
+      "description": "Point table and match results calculation",
+      "type": "object",
+      "properties": {
+        "tournamentId": { "type": "string", "maxLength": 128 },
+        "matchId": { "type": "string", "maxLength": 128 },
+        "group": { "type": "string" },
+        "results": { "type": "string" },
+        "isPublished": { "type": "boolean" },
+        "publishedAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["tournamentId", "isPublished"]
+    },
+    "Payment": {
+      "title": "Payment",
+      "description": "UPI payment verification record",
+      "type": "object",
+      "properties": {
+        "tournamentId": { "type": "string", "maxLength": 128 },
+        "teamId": { "type": "string", "maxLength": 128 },
+        "teamName": { "type": "string", "maxLength": 100 },
+        "captainName": { "type": "string", "maxLength": 100 },
+        "captainPhone": { "type": "string", "maxLength": 20 },
+        "amount": { "type": "number" },
+        "upiId": { "type": "string", "maxLength": 100 },
+        "utrNumber": { "type": "string", "maxLength": 100 },
+        "screenshotUrl": { "type": "string" },
+        "status": { "type": "string", "enum": ["pending", "verified", "rejected"] },
+        "adminNote": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "verifiedAt": { "type": "string" }
+      },
+      "required": ["tournamentId", "teamId", "utrNumber", "status"]
+    },
+    "Announcement": {
+      "title": "Announcement",
+      "description": "Esports notice board and broadcasts",
+      "type": "object",
+      "properties": {
+        "tournamentId": { "type": "string", "maxLength": 128 },
+        "title": { "type": "string", "maxLength": 200 },
+        "content": { "type": "string" },
+        "type": { "type": "string", "enum": ["urgent", "rule_update", "schedule", "general"] },
+        "pinned": { "type": "boolean" },
+        "author": { "type": "string", "maxLength": 100 },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["title", "content", "type"]
+    },
+    "Setting": {
+      "title": "Setting",
+      "description": "Organizer global settings and UPI config",
+      "type": "object",
+      "properties": {
+        "upiId": { "type": "string", "maxLength": 100 },
+        "payeeName": { "type": "string", "maxLength": 100 },
+        "qrCodeUrl": { "type": "string" },
+        "whatsappGroupUrl": { "type": "string" },
+        "discordServerUrl": { "type": "string" },
+        "supportPhone": { "type": "string", "maxLength": 20 },
+        "contactEmail": { "type": "string", "maxLength": 150 },
+        "defaultRules": { "type": "string" },
+        "pointSystem": { "type": "string" },
+        "adminEmails": { "type": "string" }
+      },
+      "required": ["upiId", "payeeName"]
+    },
+    "AuditLog": {
+      "title": "AuditLog",
+      "description": "Admin activity tracking and security trail",
+      "type": "object",
+      "properties": {
+        "adminEmail": { "type": "string", "maxLength": 150 },
+        "action": { "type": "string", "maxLength": 100 },
+        "module": { "type": "string", "maxLength": 50 },
+        "details": { "type": "string" },
+        "targetId": { "type": "string", "maxLength": 128 },
+        "timestamp": { "type": "string" }
+      },
+      "required": ["adminEmail", "action", "module", "timestamp"]
+    }
+  },
+  "firestore": {
+    "/tournaments/{tournamentId}": {
+      "schema": "Tournament",
+      "description": "Tournament records"
+    },
+    "/teams/{teamId}": {
+      "schema": "Team",
+      "description": "Registered teams"
+    },
+    "/matches/{matchId}": {
+      "schema": "Match",
+      "description": "Match fixtures and credentials"
+    },
+    "/standings/{standingId}": {
+      "schema": "Standing",
+      "description": "Point tables and standings"
+    },
+    "/payments/{paymentId}": {
+      "schema": "Payment",
+      "description": "UPI payment verification receipts"
+    },
+    "/announcements/{announcementId}": {
+      "schema": "Announcement",
+      "description": "Notices and updates"
+    },
+    "/settings/{settingId}": {
+      "schema": "Setting",
+      "description": "Organizer configurations"
+    },
+    "/audit_logs/{logId}": {
+      "schema": "AuditLog",
+      "description": "Admin activity audit trail"
+    }
+  }
+}
